@@ -33,13 +33,14 @@ window.onload = function() {
 
     // Execute functions
     this.start();
-    this.update();
 }
 
 function start() {
+    console.log('start');
     Time.setupTime();
     initializeLevel();
     // spawn();
+    update();
 }
 
 function update() {
@@ -51,13 +52,18 @@ function update() {
 }
 
 function initializeLevel() {
-    levelSetup = level1;
-    levelDynamic = level1;
+    console.log(Levels.level1);
+    Levels.levelSetup = Levels.level1;
+    Levels.levelDynamic = Levels.level1;
+    console.log('intialize level');
+    console.log(`Grid X: ${gridW}, Y: ${gridH}`);
 
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
-            switch (levelSetup[y][x]) {
+            // console.log(x + ',' + y);
+            switch (Levels.levelSetup[y][x]) {
                 case 4:
+                    console.log('Pacman found');
                     pacman = new GameObject('yellow', x, y, drawPacman);
                     break;
                     // case 5:
@@ -126,8 +132,13 @@ function move() {
     var speed = 2;
     var minDistance = 1;
 
+
+
     if (pacmanDir == left && pacman.leftObject() == undefined)
-        pacman.x = (levelSetup[pacman.roundedY()].length - 1) * unit + (unit / 2);
+        pacman.x = (Levels.levelSetup[pacman.roundedY()].length - 1) * unit + (unit / 2);
+
+    if (pacman == undefined)
+        console.log('what happened to pacman?');
 
     if (pacmanDir == right && pacman.rightObject() == undefined)
         pacman.x = unit / 2;

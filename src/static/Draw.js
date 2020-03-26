@@ -1,6 +1,6 @@
 // Draw Unit
-var gridW = gridW;
-var gridH = 36;
+var gridW = 28;
+var gridH = 31;
 
 var baseUnit = 20;
 var unit = 20;
@@ -44,7 +44,7 @@ function debugDrawLevel() {
             var unit = 20;
             var unit = 20;
 
-            switch (level1[y][x]) {
+            switch (Levels.level1[y][x]) {
                 case 0:
                     c = 'blue';
                     s = 15;
@@ -83,7 +83,7 @@ function startLevelDraw() {
 function doLevelDraw() {
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
-            if (level1[y][x] == 0) {
+            if (Levels.level1[y][x] == 0) {
                 var drawWall = getWallType(x, y);
                 drawWall(x * unit, y * unit);
             }
@@ -153,10 +153,10 @@ function drawGhost(color, x, y, w, h) {
 function drawPellets() {
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
-            if (level1[y][x] == 1)
+            if (Levels.level1[y][x] == 1)
                 drawPellet(unit / 8, x, y);
 
-            if (level1[y][x] == 2)
+            if (Levels.level1[y][x] == 2)
                 drawPellet(unit / 3, x, y);
         }
 }
@@ -177,42 +177,42 @@ function getWallType(x, y) {
     // Setup left
     var left = false;
     if (x - 1 > 0)
-        left = level1[y][x - 1] > 0;
+        left = Levels.level1[y][x - 1] > 0;
 
     // Setup top
     var top = false;
     if (y - 1 > 0)
-        top = level1[y - 1][x] > 0;
+        top = Levels.level1[y - 1][x] > 0;
 
     // Setup right
     var right = false;
     if (x + 1 < gridW)
-        right = level1[y][x + 1] > 0;
+        right = Levels.level1[y][x + 1] > 0;
 
     // Setup bottom
     var bottom = false;
     if (y + 1 < gridH)
-        bottom = level1[y + 1][x] > 0;
+        bottom = Levels.level1[y + 1][x] > 0;
 
     // Setup Top Left
     var topLeft = false;
     if (y - 1 > 0 && x - 1 > 0)
-        topLeft = level1[y - 1][x - 1] > 0;
+        topLeft = Levels.level1[y - 1][x - 1] > 0;
 
     // Setup Top Right
     var topRight = false;
     if (y + 1 < gridH && x - 1 > 0)
-        topRight = level1[y + 1][x - 1] > 0;
+        topRight = Levels.level1[y + 1][x - 1] > 0;
 
     // Setup Bottom Right
     var bottomRight = false;
     if (y + 1 < gridH && x + 1 < gridW)
-        bottomRight = level1[y + 1][x + 1] > 0;
+        bottomRight = Levels.level1[y + 1][x + 1] > 0;
 
     // Setup Bottom Left
     var bottomLeft = false;
     if (y - 1 > 0 && x + 1 < gridW)
-        bottomLeft = level1[y - 1][x + 1] > 0;
+        bottomLeft = Levels.level1[y - 1][x + 1] > 0;
 
     // if (!(left || right || top || bottom || topLeft || bottomLeft || topRight || bottomRight))
     //     return drawNothing;

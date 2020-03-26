@@ -15,19 +15,19 @@ class GameObject {
     // Nearby Objects
 
     leftObject() {
-        return levelSetup[this.roundedY()][this.roundedX() - 1];
+        return Levels.levelSetup[this.roundedY()][this.roundedX() - 1];
     }
 
     rightObject() {
-        return levelSetup[this.roundedY()][this.roundedX() + 1];
+        return Levels.levelSetup[this.roundedY()][this.roundedX() + 1];
     }
 
     topObject() {
-        return levelSetup[this.roundedY() - 1][this.roundedX()];
+        return Levels.levelSetup[this.roundedY() - 1][this.roundedX()];
     }
 
     bottomObject() {
-        return levelSetup[this.roundedY() + 1][this.roundedX()];
+        return Levels.levelSetup[this.roundedY() + 1][this.roundedX()];
     }
 
     // Values
