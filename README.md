@@ -1,1 +1,2 @@
 # Pacman
+A first attempt at making a web version of Pacman, with the level and shapes drawn completely using stroke/fill functions. Not intended to be an exact clone, but designed to be effectively identical in gameplay. 
