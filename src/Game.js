@@ -52,11 +52,8 @@ function update() {
 }
 
 function initializeLevel() {
-    console.log(Levels.level1);
     Levels.levelSetup = Levels.level1;
     Levels.levelDynamic = Levels.level1;
-    console.log('intialize level');
-    console.log(`Grid X: ${gridW}, Y: ${gridH}`);
 
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {

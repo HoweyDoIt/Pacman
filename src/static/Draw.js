@@ -102,7 +102,7 @@ var pacmanAnim = 0;
 var pacmanDir = 0;
 
 function drawPacman(color, x, y, scale) {
-    var frames = [0.05, 0.1, 0.15, 0.2, 0.25, 0.2, 0.15, 0.1];
+    var frames = [0.0, 0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1];
     var frameChangePerSecond = 30;
     var size = scale * unit / 1.5;
 
