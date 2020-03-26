@@ -77,10 +77,6 @@ function initializeLevel() {
 }
 
 function checkKey(e) {
-    // var leftObject = levelSetup[pacman.roundedY()][pacman.roundedX() - 1];
-    // var rightObject = levelSetup[pacman.roundedY()][pacman.roundedX() + 1];
-    // var topObject = levelSetup[pacman.roundedY() - 1][pacman.roundedX()];
-    // var bottomObject = levelSetup[pacman.roundedY() + 1][pacman.roundedX()];
 
     switch (e.keyCode) {
         case 37:
