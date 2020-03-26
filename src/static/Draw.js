@@ -1,6 +1,6 @@
 // Draw Unit
 var gridW = 28;
-var gridH = 31;
+var gridH = 36;
 
 var baseUnit = 20;
 var unit = 20;
@@ -153,10 +153,10 @@ function drawGhost(color, x, y, w, h) {
 function drawPellets() {
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
-            if (Levels.level1[y][x] == 1)
+            if (Levels.level1[y][x] == 2)
                 drawPellet(unit / 8, x, y);
 
-            if (Levels.level1[y][x] == 2)
+            if (Levels.level1[y][x] == 1)
                 drawPellet(unit / 3, x, y);
         }
 }

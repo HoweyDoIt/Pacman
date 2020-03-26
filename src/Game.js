@@ -55,6 +55,9 @@ function initializeLevel() {
     Levels.levelSetup = Levels.level1;
     Levels.levelDynamic = Levels.level1;
 
+    pacman = new GameObject('yellow', 13.5, 26, drawPacman);
+
+
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
             // console.log(x + ',' + y);
@@ -129,13 +132,8 @@ function move() {
     var speed = 2;
     var minDistance = 1;
 
-
-
     if (pacmanDir == left && pacman.leftObject() == undefined)
         pacman.x = (Levels.levelSetup[pacman.roundedY()].length - 1) * unit + (unit / 2);
-
-    if (pacman == undefined)
-        console.log('what happened to pacman?');
 
     if (pacmanDir == right && pacman.rightObject() == undefined)
         pacman.x = unit / 2;
