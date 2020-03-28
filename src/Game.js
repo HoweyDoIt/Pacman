@@ -56,37 +56,38 @@ function initializeLevel() {
     Levels.levelDynamic = Levels.level1;
 
     pacman = new GameObject('yellow', 13.5, 26, drawPacman);
+    blinky = new GameObject('red', 13.5, 14, drawGhost);
 
 
-    for (var y = 0; y < gridH; y++)
-        for (var x = 0; x < gridW; x++) {
-            // console.log(x + ',' + y);
-            switch (Levels.levelSetup[y][x]) {
-                case 4:
-                    console.log('Pacman found');
-                    pacman = new GameObject('yellow', x, y, drawPacman);
-                    break;
-                    // case 5:
-                    //     inky = new GameObject('cyan', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-                    //     break;
-                    // case 6:
-                    //     pinky = new GameObject('pink', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-                    //     break;
-                    // case 7:
-                    //     blinky = new GameObject('red', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-                    //     break;
-                    // case 8:
-                    //     sue = new GameObject('orange', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-                    //     break;
-            }
-        }
+    // for (var y = 0; y < gridH; y++)
+    //     for (var x = 0; x < gridW; x++) {
+    //         // console.log(x + ',' + y);
+    //         switch (Levels.levelSetup[y][x]) {
+    //             case 4:
+    //                 console.log('Pacman found');
+    //                 pacman = new GameObject('yellow', x, y, drawPacman);
+    //                 break;
+    //                 // case 5:
+    //                 //     inky = new GameObject('cyan', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
+    //                 //     break;
+    //                 // case 6:
+    //                 //     pinky = new GameObject('pink', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
+    //                 //     break;
+    //                 // case 7:
+    //                 //     blinky = new GameObject('red', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
+    //                 //     break;
+    //                 // case 8:
+    //                 //     sue = new GameObject('orange', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
+    //                 //     break;
+    //         }
+    //     }
 }
 
 function checkKey(e) {
 
     switch (e.keyCode) {
         case 37:
-            if (pacman.leftObject() > 0 && pacmanDir != 1) {
+            if (pacman.leftObject() > 2 && pacmanDir != 1) {
                 if (pacmanDir != 0) {
                     // pacman.x = pacman.roundedAbsoluteX();
                     // pacman.y = pacman.roundedAbsoluteY();
@@ -95,7 +96,7 @@ function checkKey(e) {
             }
             break;
         case 38:
-            if (pacman.topObject() > 0 && pacmanDir != 1.5) {
+            if (pacman.topObject() > 2 && pacmanDir != 1.5) {
                 if (pacmanDir != 0.5) {
                     // pacman.x = pacman.roundedAbsoluteX();
                     // pacman.y = pacman.roundedAbsoluteY();
@@ -104,7 +105,7 @@ function checkKey(e) {
             }
             break;
         case 39:
-            if (pacman.rightObject() > 0 && pacmanDir != 0) {
+            if (pacman.rightObject() > 2 && pacmanDir != 0) {
                 if (pacmanDir != 1) {
                     // pacman.x = pacman.roundedAbsoluteX();
                     // pacman.y = pacman.roundedAbsoluteY();
@@ -113,7 +114,7 @@ function checkKey(e) {
             }
             break;
         case 40:
-            if (pacman.bottomObject() > 0 && pacmanDir != 0.5) {
+            if (pacman.bottomObject() > 2 && pacmanDir != 0.5) {
                 if (pacmanDir != 1.5) {
                     // pacman.x = pacman.roundedAbsoluteX();
                     // pacman.y = pacman.roundedAbsoluteY();
@@ -129,7 +130,7 @@ function move() {
     var right = 0;
     var up = 1.5;
     var down = 0.5;
-    var speed = 2;
+    var speed = 4 * .8;
     var minDistance = 1;
 
     if (pacmanDir == left && pacman.leftObject() == undefined)
@@ -138,10 +139,10 @@ function move() {
     if (pacmanDir == right && pacman.rightObject() == undefined)
         pacman.x = unit / 2;
 
-    var canMoveLeft = pacman.leftObject() > 0 || (pacman.leftObject() <= 0 && pacman.gridX() - (pacman.roundedX() - 1) > minDistance);
-    var canMoveRight = pacman.rightObject() > 0 || (pacman.rightObject() <= 0 && (pacman.roundedX() + 1) - pacman.gridX() > minDistance);
-    var canMoveUp = pacman.topObject() > 0 || (pacman.topObject() <= 0 && pacman.gridY() - (pacman.roundedY() - 1) > minDistance);
-    var canMoveDown = pacman.bottomObject() > 0 || (pacman.bottomObject() <= 0 && (pacman.roundedY() + 1) - pacman.gridY() > minDistance);
+    var canMoveLeft = pacman.leftObject() > 2 || (pacman.leftObject() <= 0 && pacman.gridX() - (pacman.roundedX() - 1) > minDistance);
+    var canMoveRight = pacman.rightObject() > 2 || (pacman.rightObject() <= 0 && (pacman.roundedX() + 1) - pacman.gridX() > minDistance);
+    var canMoveUp = pacman.topObject() > 2 || (pacman.topObject() <= 0 && pacman.gridY() - (pacman.roundedY() - 1) > minDistance);
+    var canMoveDown = pacman.bottomObject() > 2 || (pacman.bottomObject() <= 0 && (pacman.roundedY() + 1) - pacman.gridY() > minDistance);
 
     if (pacmanDir == left) {
         if (canMoveLeft)
@@ -155,6 +156,21 @@ function move() {
     } else if (pacmanDir == down) {
         if (canMoveDown)
             pacman.y += speed * Time.scaledDeltaTime * normalizedUnit();
+    }
+
+    // Check for Dots
+    var curX = pacman.roundedX();
+    var curY = pacman.roundedY();
+    var curTile = Levels.levelDynamic[curY][curX];
+
+    // Small Dots
+    if (curTile == 3) {
+        Levels.levelDynamic[curY][curX] = 5;
+    }
+
+    // Big Dots
+    if (curTile == 4) {
+        Levels.levelDynamic[curY][curX] = 5;
     }
 }
 
@@ -178,12 +194,15 @@ function draw() {
     startLevelDraw();
     doLevelDraw();
     endLevelDraw();
-
-    drawPellets();
+    drawCage();
     pacman.draw();
 
+    blinky.draw();
+
+    drawPellets();
+
+
     // inky.draw();
-    // blinky.draw();
     // pinky.draw();
     // sue.draw();
 }

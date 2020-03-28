@@ -1,9 +1,9 @@
 // Draw Unit
-var gridW = 28;
-var gridH = 36;
+const gridW = 28;
+const gridH = 36;
 
-var baseUnit = 20;
-var unit = 20;
+const baseUnit = 20;
+const unit = 20;
 
 function normalizedUnit() {
     return unit / baseUnit;
@@ -99,7 +99,7 @@ function endLevelDraw() {
 //////////////////////////////
 
 var pacmanAnim = 0;
-var pacmanDir = 0;
+var pacmanDir = 1;
 
 function drawPacman(color, x, y, scale) {
     var frames = [0.0, 0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1];
@@ -126,22 +126,43 @@ function drawPacman(color, x, y, scale) {
 // Ghost drawing logic
 //////////////////////////////
 
-function drawGhost(color, x, y, w, h) {
-    var ghostSize = unit / 2;
-    var curX = x * unit + (unit / 2) - ghostSize;
-    var curY = y * unit + unit;
+function drawGhost(color, x, y, scale) {
+    var ghostSize = unit / 1.5;
+    var curX = x;
+    var curY = y;
 
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.moveTo(curX, curY);
 
-    ctx.arc(x * unit + (unit / 2), y * unit + (unit / 2), ghostSize, Math.PI, 0, false);
+    // Draw head top
+    ctx.arc(curX, curY, ghostSize, Math.PI, 0, false);
 
-    curX += ghostSize * 2;
+    // Draw right vert line
+    curX += unit - ghostSize / 2;
+    curY += ghostSize / 2 + ghostSize / 3;
     ctx.lineTo(curX, curY);
 
-    curX -= ghostSize * 2;
+    // // Draw bumped bottom
+    var ghostBump = ghostSize / 3;
+    for (var i = 0; i < 3; i++) {
+        curX -= ghostBump;
+        ctx.lineTo(curX, curY);
+        ctx.arc(curX, curY, ghostBump, Math.PI * 2, Math.PI, false);
+        curX -= ghostBump;
+    }
+
     ctx.lineTo(curX, curY);
+
+    // Draw left vert line
+    curY -= ghostSize / 2 + ghostSize / 3;
+    ctx.lineTo(curX, curY);
+
+    // curX += ghostSize * 2;
+    // ctx.lineTo(curX, curY);
+
+    // curX -= ghostSize * 2;
+    // ctx.lineTo(curX, curY);
 
     ctx.fill();
 }
@@ -153,16 +174,18 @@ function drawGhost(color, x, y, w, h) {
 function drawPellets() {
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
-            if (Levels.level1[y][x] == 2)
+            if (Levels.levelDynamic[y][x] == 3) {
                 drawPellet(unit / 8, x, y);
+            }
 
-            if (Levels.level1[y][x] == 1)
+            if (Levels.levelDynamic[y][x] == 4) {
                 drawPellet(unit / 3, x, y);
+            }
         }
 }
 
 function drawPellet(circle, x, y) {
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'lightgoldenrodyellow';
     ctx.beginPath();
     ctx.arc(x * unit + (unit / 2), y * unit + (unit / 2), circle, 0, Math.PI * 2, true);
     ctx.fill();
@@ -338,4 +361,26 @@ function drawBLC(x, y) {
     curY -= unit / 2;
 
     ctx.arc(curX, curY, unit / 2, angleVal * Math.PI, (angleVal + 0.5) * Math.PI, false);
+}
+
+function drawCage() {
+    var x = 11 * unit;
+    var y = 16.5 * unit;
+    // var w = 6 * unit;
+    // var h = 2.5 * unit;
+
+    // ctx.beginPath();
+    // // ctx.strokeStyle = 'blue';
+    // // ctx.lineWidth = 3;
+    // ctx.moveTo(x, y);
+    // ctx.lineTo(x, y + h);
+    // ctx.lineTo(x + w, y + h);
+    // ctx.lineTo(x + w, y);
+    // ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = 'pink';
+    ctx.moveTo(x + 1 * unit + unit / 2, y - unit / 2);
+    ctx.lineTo(x + 4 * unit + unit / 2, y - unit / 2);
+    ctx.stroke();
 }
