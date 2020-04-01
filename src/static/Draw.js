@@ -5,94 +5,77 @@ const gridH = 36;
 const baseUnit = 20;
 const unit = 20;
 
-function normalizedUnit() {
-    return unit / baseUnit;
-}
+class Draw {
+    constructor() {}
 
-function drawRect(color, x, y, w, h) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, w, h);
-    // ctx.beginPath();
-    // ctx.strokeStyle = 'gray';
-    // ctx.rect(x, y, w, h);
-    // ctx.stroke();
-}
+    static normalizedUnit = function() {
+        return unit / baseUnit;
+    }
 
-function drawBackground() {
-    drawRect('black', 0, 0, canvas.width, canvas.height);
-}
+    static rect = function(color, x, y, w, h) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
+    }
 
-function drawCircle(color, x, y) {
-    var circleSize = unit / 1.5;
+    static background = function() {
+        Draw.rect('black', 0, 0, canvas.width, canvas.height);
+    }
 
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x * 20 + (unit / 2), y * 20 + (unit / 2), circleSize, 0, Math.PI * 2, true);
-    ctx.fill();
-}
+    static level = function() {
+        ctx.beginPath();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 3;
 
-function drawText(text, x, y) {
-    ctx.fillText(text, x, y);
-}
-
-function debugDrawLevel() {
-    for (var y = 0; y < gridH; y++)
-        for (var x = 0; x < gridW; x++) {
-            var c = '';
-            var s = 15
-
-            var unit = 20;
-            var unit = 20;
-
-            switch (Levels.level1[y][x]) {
-                case 0:
-                    c = 'blue';
-                    s = 15;
-                    break;
-                case 1:
-                    c = 'gray';
-                    s = 3;
-                    break;
-                case 2:
-                    c = 'white';
-                    s = 5;
-                    break;
-                case 3:
-                    c = 'black';
-                    break;
-                case 4:
-                    c = 'yellow';
-                    s = 10
-                    break;
+        for (var y = 0; y < gridH; y++)
+            for (var x = 0; x < gridW; x++) {
+                if (Levels.level1[y][x] == 0) {
+                    var drawWall = getWallType(x, y);
+                    drawWall(x * unit, y * unit);
+                }
             }
-            ctx.beginPath();
-            ctx.strokeStyle = c;
-            // ctx.fillStyle = c;
-            ctx.rect(x * unit + (unit - s) / 2, y * unit + (unit - s) / 2, s, s);
-            // ctx.fillRect(x * 20, y * 20, 20, 20);
-            ctx.stroke();
-        }
+
+        ctx.stroke();
+    }
 }
 
-function startLevelDraw() {
-    ctx.beginPath();
-    ctx.strokeStyle = 'blue';
-    ctx.lineWidth = 3;
-}
+// function debugDrawLevel() {
+//     for (var y = 0; y < gridH; y++)
+//         for (var x = 0; x < gridW; x++) {
+//             var c = '';
+//             var s = 15
 
-function doLevelDraw() {
-    for (var y = 0; y < gridH; y++)
-        for (var x = 0; x < gridW; x++) {
-            if (Levels.level1[y][x] == 0) {
-                var drawWall = getWallType(x, y);
-                drawWall(x * unit, y * unit);
-            }
-        }
-}
+//             var unit = 20;
+//             var unit = 20;
 
-function endLevelDraw() {
-    ctx.stroke();
-}
+//             switch (Levels.level1[y][x]) {
+//                 case 0:
+//                     c = 'blue';
+//                     s = 15;
+//                     break;
+//                 case 1:
+//                     c = 'gray';
+//                     s = 3;
+//                     break;
+//                 case 2:
+//                     c = 'white';
+//                     s = 5;
+//                     break;
+//                 case 3:
+//                     c = 'black';
+//                     break;
+//                 case 4:
+//                     c = 'yellow';
+//                     s = 10
+//                     break;
+//             }
+//             ctx.beginPath();
+//             ctx.strokeStyle = c;
+//             // ctx.fillStyle = c;
+//             ctx.rect(x * unit + (unit - s) / 2, y * unit + (unit - s) / 2, s, s);
+//             // ctx.fillRect(x * 20, y * 20, 20, 20);
+//             ctx.stroke();
+//         }
+// }
 
 //////////////////////////////
 // Pacman drawing logic
@@ -127,6 +110,11 @@ function drawPacman(color, x, y, scale) {
 //////////////////////////////
 
 function drawGhost(color, x, y, scale) {
+    drawGhostBody(color, x, y, scale);
+    drawGhostEyes(color, x, y, scale);
+}
+
+function drawGhostBody(color, x, y, scale) {
     var ghostSize = scale * unit;
     var curX = x;
     var curY = y;
@@ -158,33 +146,31 @@ function drawGhost(color, x, y, scale) {
     curY -= ghostSize / 2 + ghostSize / 3;
     ctx.lineTo(curX, curY);
 
-    // curX += ghostSize * 2;
-    // ctx.lineTo(curX, curY);
-
-    // curX -= ghostSize * 2;
-    // ctx.lineTo(curX, curY);
-
     ctx.fill();
 }
 
+function drawGhostEyes(color, x, y, scale) {
+
+}
+
 //////////////////////////////
-// Pellet drawing logic
+// Dot drawing logic
 //////////////////////////////
 
-function drawPellets() {
+function drawDots() {
     for (var y = 0; y < gridH; y++)
         for (var x = 0; x < gridW; x++) {
             if (Levels.levelDynamic[y][x] == 3) {
-                drawPellet(unit / 8, x, y);
+                drawDot(unit / 8, x, y);
             }
 
             if (Levels.levelDynamic[y][x] == 4) {
-                drawPellet(unit / 3, x, y);
+                drawDot(unit / 3, x, y);
             }
         }
 }
 
-function drawPellet(circle, x, y) {
+function drawDot(circle, x, y) {
     ctx.fillStyle = 'lightgoldenrodyellow';
     ctx.beginPath();
     ctx.arc(x * unit + (unit / 2), y * unit + (unit / 2), circle, 0, Math.PI * 2, true);
@@ -236,9 +222,6 @@ function getWallType(x, y) {
     var bottomLeft = false;
     if (y - 1 > 0 && x + 1 < gridW)
         bottomLeft = Levels.level1[y - 1][x + 1] > 0;
-
-    // if (!(left || right || top || bottom || topLeft || bottomLeft || topRight || bottomRight))
-    //     return drawNothing;
 
     //  left or right and not (top or bottom)
     //      vertical wall
@@ -366,17 +349,6 @@ function drawBLC(x, y) {
 function drawCage() {
     var x = 11 * unit;
     var y = 16.5 * unit;
-    // var w = 6 * unit;
-    // var h = 2.5 * unit;
-
-    // ctx.beginPath();
-    // // ctx.strokeStyle = 'blue';
-    // // ctx.lineWidth = 3;
-    // ctx.moveTo(x, y);
-    // ctx.lineTo(x, y + h);
-    // ctx.lineTo(x + w, y + h);
-    // ctx.lineTo(x + w, y);
-    // ctx.stroke();
 
     ctx.beginPath();
     ctx.strokeStyle = 'pink';

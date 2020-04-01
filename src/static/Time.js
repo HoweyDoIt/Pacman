@@ -7,9 +7,9 @@
 /// 
 //////////////////////////////////////////////////////
 class Time {
-    // Time variables
     constructor() {}
 
+    // Time variables
     static startTime = 0.0;
     static timeSinceStart = 0.0;
     static deltaTime = 0.0;
