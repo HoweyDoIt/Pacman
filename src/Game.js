@@ -12,6 +12,9 @@ var canvas;
 var ctx;
 
 // Game Objects
+var gameObjects;
+var ghosts;
+
 var pacman;
 var inky;
 var blinky;
@@ -37,17 +40,20 @@ window.onload = function() {
 
 function start() {
     console.log('start');
-    Time.setupTime();
+    Time.setup();
     initializeLevel();
-    // spawn();
     update();
 }
 
 function update() {
-    Time.updateTime();
-    move();
-    smooth();
-    draw();
+    Time.update();
+
+    drawGame();
+
+    gameObjects.forEach(go => {
+        go.update();
+    });
+
     window.requestAnimationFrame(() => this.update())
 }
 
@@ -55,36 +61,17 @@ function initializeLevel() {
     Levels.levelSetup = Levels.level1;
     Levels.levelDynamic = Levels.level1;
 
-    pacman = new GameObject('yellow', 13.5, 26, drawPacman);
-    blinky = new GameObject('red', 13.5, 14, drawGhost);
+    pacman = new GameObject('yellow', 13.5, 26, 0.667, movePacman, drawPacman);
+    blinky = new GameObject('red', 13.5, 14, 0.667, function() {}, drawGhost);
+    inky = new GameObject('blue', 13.5, 14, 0.667, function() {}, drawGhost);
+    pinky = new GameObject('pink', 13.5, 14, 0.667, function() {}, drawGhost);
+    sue = new GameObject('orange', 13.5, 14, 0.667, function() {}, drawGhost);
 
-
-    // for (var y = 0; y < gridH; y++)
-    //     for (var x = 0; x < gridW; x++) {
-    //         // console.log(x + ',' + y);
-    //         switch (Levels.levelSetup[y][x]) {
-    //             case 4:
-    //                 console.log('Pacman found');
-    //                 pacman = new GameObject('yellow', x, y, drawPacman);
-    //                 break;
-    //                 // case 5:
-    //                 //     inky = new GameObject('cyan', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-    //                 //     break;
-    //                 // case 6:
-    //                 //     pinky = new GameObject('pink', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-    //                 //     break;
-    //                 // case 7:
-    //                 //     blinky = new GameObject('red', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-    //                 //     break;
-    //                 // case 8:
-    //                 //     sue = new GameObject('orange', x * unit + (unit / 2), y + unit + (unit / 2), drawGhost);
-    //                 //     break;
-    //         }
-    //     }
+    gameObjects = [pacman, blinky, inky, pinky, sue];
+    ghosts = [blinky, inky, pinky, sue];
 }
 
 function checkKey(e) {
-
     switch (e.keyCode) {
         case 37:
             if (pacman.leftObject() > 2 && pacmanDir != 1) {
@@ -125,12 +112,12 @@ function checkKey(e) {
     }
 }
 
-function move() {
+function movePacman() {
     var left = 1;
     var right = 0;
     var up = 1.5;
     var down = 0.5;
-    var speed = 4 * .8;
+    var speed = 4 * .1;
     var minDistance = 1;
 
     if (pacmanDir == left && pacman.leftObject() == undefined)
@@ -172,6 +159,8 @@ function move() {
     if (curTile == 4) {
         Levels.levelDynamic[curY][curX] = 5;
     }
+
+    smooth();
 }
 
 // Responsible for lerping sideways position values to rounded values
@@ -188,23 +177,16 @@ function smooth() {
     }
 }
 
-function draw() {
+function drawGame() {
     drawBackground();
 
     startLevelDraw();
     doLevelDraw();
     endLevelDraw();
-    drawCage();
-    pacman.draw();
 
-    blinky.draw();
+    drawCage();
 
     drawPellets();
-
-
-    // inky.draw();
-    // pinky.draw();
-    // sue.draw();
 }
 
 function lerp(start, end, factor) {

@@ -1,15 +1,63 @@
 class GameObject {
 
-    constructor(color, x, y, drawFunction) {
+    constructor(color, x, y, scale, moveFunction, drawFunction) {
         this.color = color;
         this.x = x * unit + (unit / 2);
         this.y = y * unit + (unit / 2);
-        this.scale = 1.0;
+        this.scale = scale;
         this.drawFunction = drawFunction;
+        this.moveFunction = moveFunction;
+
+        this.lastTileX = this.roundedX();
+        this.lastTileY = this.roundedY();
+        this.lastPosX = this.gridX();
+        this.lastPosY = this.gridY();
+        this.checkingForCenter = false;
+    }
+
+    update() {
+        this.move();
+        this.draw();
+    }
+
+    move() {
+        this.moveFunction();
     }
 
     draw() {
         this.drawFunction(this.color, this.x, this.y, this.scale);
+    }
+
+    checkTileUpdates() {
+        // Check if the tile has changed since the last frame
+        if (this.lastTileX != this.roundedX() || this.lastTileY != this.roundedY()) {
+            this.checkingForCenter = true;
+            this.onTileChanged();
+        }
+
+        var distX = Math.abs(this.roundedX() - this.gridX());
+        var distY = Math.abs(this.roundedY() - this.gridY());
+
+        if (this.checkingForCenter && distX < 0.1 && distY < 0.1) {
+            this.checkingForCenter = false;
+            this.onTileCentered();
+        }
+
+        // Update previous values
+        this.lastTileX = this.roundedX();
+        this.lastTileY = this.roundedY();
+        this.lastPosX = this.gridX();
+        this.lastPosY = this.gridY();
+    }
+
+    // Event called when current tile is changed
+    onTileChanged() {
+
+    }
+
+    // Event called when current tile is centered
+    onTileCentered() {
+
     }
 
     // Nearby Objects
@@ -32,6 +80,7 @@ class GameObject {
 
     // Values
 
+    // returns a tile position integer
     roundedX() {
         return Math.round(this.gridX());
     }
@@ -40,6 +89,7 @@ class GameObject {
         return Math.round(this.gridY());
     }
 
+    // returns a normalized position on the grid
     gridX() {
         return this.x / unit - 0.5;
     }

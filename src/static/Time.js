@@ -18,12 +18,12 @@ class Time {
     // this.fps = 60;
 
 
-    static setupTime = function() {
+    static setup = function() {
         Time.startTime = new Date().getTime();
         Time.timeSinceStart = new Date().getTime() - Time.startTime;
     }
 
-    static updateTime = function() {
+    static update = function() {
         Time.frameCount++;
 
         var prevTimeSinceStart = this.timeSinceStart;
@@ -33,7 +33,7 @@ class Time {
         Time.scaledDeltaTime = Time.deltaTime * 60;
     }
 
-    static resetTime = function() {
+    static reset = function() {
         Time.startTime = new Date().getTime();
         Time.timeSinceStart = 0.0;
         Time.deltaTime = 0.0;

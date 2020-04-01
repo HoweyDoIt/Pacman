@@ -104,7 +104,7 @@ var pacmanDir = 1;
 function drawPacman(color, x, y, scale) {
     var frames = [0.0, 0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1];
     var frameChangePerSecond = 30;
-    var size = scale * unit / 1.5;
+    var size = scale * unit;
 
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -127,7 +127,7 @@ function drawPacman(color, x, y, scale) {
 //////////////////////////////
 
 function drawGhost(color, x, y, scale) {
-    var ghostSize = unit / 1.5;
+    var ghostSize = scale * unit;
     var curX = x;
     var curY = y;
 
