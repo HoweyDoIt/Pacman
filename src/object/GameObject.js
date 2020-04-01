@@ -16,6 +16,7 @@ class GameObject {
     }
 
     update() {
+        this.checkTileUpdates();
         this.move();
         this.draw();
     }

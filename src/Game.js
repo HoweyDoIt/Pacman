@@ -32,7 +32,7 @@ window.onload = function() {
     ctx = canvas.getContext('2d');
 
     // Initialize Input
-    this.document.onkeydown = this.checkKey;
+    this.document.onkeydown = Input.checkKey;
 
     // Execute functions
     this.start();
@@ -48,7 +48,7 @@ function start() {
 function update() {
     Time.update();
 
-    drawGame();
+    Draw.level();
 
     gameObjects.forEach(go => {
         go.update();
@@ -61,68 +61,14 @@ function initializeLevel() {
     Levels.levelSetup = Levels.level1;
     Levels.levelDynamic = Levels.level1;
 
-    pacman = new GameObject('yellow', 13.5, 26, 0.667, Move.pacman, drawPacman);
-    blinky = new GameObject('red', 13.5, 14, 0.667, Move.blinky, drawGhost);
-    inky = new GameObject('blue', 12, 17, 0.667, Move.inky, drawGhost);
-    pinky = new GameObject('pink', 13.5, 17, 0.667, Move.pinky, drawGhost);
-    sue = new GameObject('orange', 15, 17, 0.667, Move.sue, drawGhost);
+    pacman = new GameObject('yellow', 13.5, 26, 0.667, Move.pacman, Draw.pacman);
+    blinky = new GameObject('red', 13.5, 14, 0.667, Move.blinky, Draw.ghost);
+    inky = new GameObject('cyan', 12, 17, 0.667, Move.inky, Draw.ghost);
+    pinky = new GameObject('hotpink', 13.5, 17, 0.667, Move.pinky, Draw.ghost);
+    sue = new GameObject('orange', 15, 17, 0.667, Move.sue, Draw.ghost);
 
     gameObjects = [pacman, blinky, inky, pinky, sue];
     ghosts = [blinky, inky, pinky, sue];
-}
-
-function checkKey(e) {
-    switch (e.keyCode) {
-        case 37:
-            if (pacman.leftObject() > 2 && pacmanDir != 1) {
-                if (pacmanDir != 0) {
-                    // pacman.x = pacman.roundedAbsoluteX();
-                    // pacman.y = pacman.roundedAbsoluteY();
-                }
-                pacmanDir = 1;
-            }
-            break;
-        case 38:
-            if (pacman.topObject() > 2 && pacmanDir != 1.5) {
-                if (pacmanDir != 0.5) {
-                    // pacman.x = pacman.roundedAbsoluteX();
-                    // pacman.y = pacman.roundedAbsoluteY();
-                }
-                pacmanDir = 1.5;
-            }
-            break;
-        case 39:
-            if (pacman.rightObject() > 2 && pacmanDir != 0) {
-                if (pacmanDir != 1) {
-                    // pacman.x = pacman.roundedAbsoluteX();
-                    // pacman.y = pacman.roundedAbsoluteY();
-                }
-                pacmanDir = 0;
-            }
-            break;
-        case 40:
-            if (pacman.bottomObject() > 2 && pacmanDir != 0.5) {
-                if (pacmanDir != 1.5) {
-                    // pacman.x = pacman.roundedAbsoluteX();
-                    // pacman.y = pacman.roundedAbsoluteY();
-                }
-                pacmanDir = 0.5;
-            }
-            break;
-    }
-}
-
-function drawGame() {
-    Draw.background();
-
-    Draw.level();
-    // startLevelDraw();
-    // doLevelDraw();
-    // endLevelDraw();
-
-    drawCage();
-
-    drawDots();
 }
 
 function lerp(start, end, factor) {
