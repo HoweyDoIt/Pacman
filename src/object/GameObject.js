@@ -1,12 +1,14 @@
 class GameObject {
 
-    constructor(color, x, y, scale, moveFunction, drawFunction) {
+    constructor(color, x, y, scale, moveFunction, drawFunction, onTileChangedFunction, onTileCenteredFunction) {
         this.color = color;
         this.x = x * unit + (unit / 2);
         this.y = y * unit + (unit / 2);
         this.scale = scale;
         this.drawFunction = drawFunction;
         this.moveFunction = moveFunction;
+        this.onTileChangedFunction = onTileChangedFunction;
+        this.onTileCenteredFunction = onTileCenteredFunction;
 
         this.lastTileX = this.roundedX();
         this.lastTileY = this.roundedY();
@@ -53,12 +55,12 @@ class GameObject {
 
     // Event called when current tile is changed
     onTileChanged() {
-
+        this.onTileChangedFunction(this.roundedX(), this.roundedY());
     }
 
     // Event called when current tile is centered
     onTileCentered() {
-
+        this.onTileCenteredFunction(this.roundedX(), this.roundedY());
     }
 
     // Nearby Objects

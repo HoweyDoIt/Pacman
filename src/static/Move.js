@@ -8,7 +8,7 @@ class Move {
         var up = 1.5;
         var down = 0.5;
 
-        var speed = 4 * .1;
+        var speed = 4 * .8;
         var minDistance = 1;
 
         // Teleport (tunnels) when going off-screen
@@ -37,21 +37,6 @@ class Move {
         } else if (Draw.pacmanDir == down) {
             if (canMoveDown)
                 pacman.y += speed * Time.scaledDeltaTime * Draw.normalizedUnit();
-        }
-
-        // Check for Dots
-        var curX = pacman.roundedX();
-        var curY = pacman.roundedY();
-        var curTile = Levels.levelDynamic[curY][curX];
-
-        // Small Dots
-        if (curTile == 3) {
-            Levels.levelDynamic[curY][curX] = 5;
-        }
-
-        // Big Dots
-        if (curTile == 4) {
-            Levels.levelDynamic[curY][curX] = 5;
         }
 
         // Smoothing (adjusting x and y position if it gets misaligned while turning)
