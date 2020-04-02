@@ -15,6 +15,8 @@ class GameObject {
         this.lastPosX = this.gridX();
         this.lastPosY = this.gridY();
         this.checkingForCenter = false;
+
+        this.moveDir = 'left';
     }
 
     update() {

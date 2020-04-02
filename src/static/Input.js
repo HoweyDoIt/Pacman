@@ -68,26 +68,26 @@ class Input {
         var down = 0.5;
 
         if (Input.leftPressed == true) {
-            if (pacman.leftObject() > 2 && Draw.pacmanDir != left) {
-                Draw.pacmanDir = left;
+            if (pacman.leftObject() > 2 && pacman.moveDir != 'left') {
+                pacman.moveDir = 'left';
             }
         }
 
         if (Input.upPressed == true) {
-            if (pacman.topObject() > 2 && Draw.pacmanDir != up) {
-                Draw.pacmanDir = up;
+            if (pacman.topObject() > 2 && pacman.moveDir != 'up') {
+                pacman.moveDir = 'up';
             }
         }
 
         if (Input.rightPressed == true) {
-            if (pacman.rightObject() > 2 && Draw.pacmanDir != right) {
-                Draw.pacmanDir = right;
+            if (pacman.rightObject() > 2 && pacman.moveDir != 'right') {
+                pacman.moveDir = 'right';
             }
         }
 
         if (Input.downPressed == true) {
-            if (pacman.bottomObject() > 2 && Draw.pacmanDir != down) {
-                Draw.pacmanDir = down;
+            if (pacman.bottomObject() > 2 && pacman.moveDir != 'down') {
+                pacman.moveDir = 'down';
             }
         }
     }

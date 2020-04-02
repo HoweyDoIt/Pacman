@@ -43,19 +43,34 @@ class Draw {
     //////////////////////////////
 
     static pacmanAnim = 0;
-    static pacmanDir = 1;
 
     static pacman(color, x, y, scale) {
         var frames = [0.0, 0.1, 0.2, 0.3, 0.4, 0.3, 0.2, 0.1];
         var frameChangePerSecond = 30;
         var size = scale * unit;
 
+        var dirMultiplier = 1;
+        switch (pacman.moveDir) {
+            case 'left':
+                dirMultiplier = 1;
+                break;
+            case 'right':
+                dirMultiplier = 0;
+                break;
+            case 'up':
+                dirMultiplier = 1.5;
+                break;
+            case 'down':
+                dirMultiplier = 0.5;
+        }
+
+
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(x, y, size, frames[Draw.pacmanAnim] * Math.PI + (Math.PI * Draw.pacmanDir), (1.0 + frames[Draw.pacmanAnim]) * Math.PI + (Math.PI * Draw.pacmanDir), false);
+        ctx.arc(x, y, size, frames[Draw.pacmanAnim] * Math.PI + (Math.PI * dirMultiplier), (1.0 + frames[Draw.pacmanAnim]) * Math.PI + (Math.PI * dirMultiplier), false);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(x, y, size, (1 - frames[Draw.pacmanAnim]) * Math.PI + (Math.PI * Draw.pacmanDir), (1 + (1 - frames[Draw.pacmanAnim])) * Math.PI + (Math.PI * Draw.pacmanDir), false);
+        ctx.arc(x, y, size, (1 - frames[Draw.pacmanAnim]) * Math.PI + (Math.PI * dirMultiplier), (1 + (1 - frames[Draw.pacmanAnim])) * Math.PI + (Math.PI * dirMultiplier), false);
         ctx.fill();
 
         var event = Time.frameCount % Math.round(60 / frameChangePerSecond); // 60 = old fps
