@@ -88,11 +88,13 @@ function pacmanOnTileChanged(x, y) {
     // Small Dots
     if (curTile == 3) {
         Levels.levelDynamic[y][x] = 5;
+        Stats.addToScore(10);
     }
 
     // Big Dots
     if (curTile == 4) {
         Levels.levelDynamic[y][x] = 5;
+        Stats.addToScore(50);
     }
 }
 
