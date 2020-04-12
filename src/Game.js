@@ -89,12 +89,20 @@ function pacmanOnTileChanged(x, y) {
     if (curTile == 3) {
         Levels.levelDynamic[y][x] = 5;
         Stats.addToScore(10);
+
+        // Stop movement for 1 frame (1/60)
+        pacman.moveSpeed = 0.0;
+        Time.addTimer(0.01666666667, () => pacman.moveSpeed = 1.0);
     }
 
     // Big Dots
     if (curTile == 4) {
         Levels.levelDynamic[y][x] = 5;
         Stats.addToScore(50);
+
+        // Stop movement for 3 frames (3/60)
+        pacman.moveSpeed = 0.0;
+        Time.addTimer(0.05, () => pacman.moveSpeed = 1.0);
     }
 }
 

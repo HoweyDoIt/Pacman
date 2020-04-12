@@ -16,7 +16,7 @@ class Time {
     static scaledDeltaTime = 0.0;
     static frameCount = 0;
     // this.fps = 60;
-
+    static timers = [];
 
     static setup() {
         Time.startTime = new Date().getTime();
@@ -31,6 +31,14 @@ class Time {
         Time.timeSinceStart = (new Date().getTime() - Time.startTime) / 1000;
         Time.deltaTime = Time.timeSinceStart - prevTimeSinceStart;
         Time.scaledDeltaTime = Time.deltaTime * 60;
+
+        // Handle Timers
+        Time.timers.forEach(timer => {
+            if (Time.timeSinceStart >= timer.end) {
+                timer.callback();
+            }
+        });
+        Time.timers = Time.timers.filter(timer => Time.timeSinceStart < timer.end);
     }
 
     static reset() {
@@ -39,5 +47,9 @@ class Time {
         Time.deltaTime = 0.0;
         Time.scaledDeltaTime = 0.0;
         Time.frameCount = 0;
+    }
+
+    static addTimer(duration, callback) {
+        Time.timers.push(new Timer(duration, callback));
     }
 }

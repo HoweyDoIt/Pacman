@@ -11,7 +11,7 @@ class Stats {
         if (Stats.currentScore > Stats.highScore)
             Stats.highScore = Stats.currentScore;
 
-        console.log(Stats.currentScore);
+        // console.log(Stats.currentScore);
     }
 
     static reset() {

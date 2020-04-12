@@ -8,7 +8,7 @@ class Move {
         // var up = 1.5;
         // var down = 0.5;
 
-        var speed = 4 * .8;
+        var speed = 2 * pacman.moveSpeed //* .8;
         var minDistance = 1;
 
         // Teleport (tunnels) when going off-screen
