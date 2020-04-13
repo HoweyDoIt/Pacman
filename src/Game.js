@@ -26,7 +26,7 @@ var score = 0;
 var lives = 3;
 
 // Initialization
-window.onload = function() {
+window.onload = function () {
     // Initialize Canvas
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
@@ -86,7 +86,7 @@ function pacmanOnTileChanged(x, y) {
     var curTile = Levels.levelDynamic[y][x];
 
     // Small Dots
-    if (curTile == 3) {
+    if (curTile === 3) {
         Levels.levelDynamic[y][x] = 5;
         Stats.addToScore(10);
 
@@ -96,7 +96,7 @@ function pacmanOnTileChanged(x, y) {
     }
 
     // Big Dots
-    if (curTile == 4) {
+    if (curTile === 4) {
         Levels.levelDynamic[y][x] = 5;
         Stats.addToScore(50);
 
@@ -106,8 +106,11 @@ function pacmanOnTileChanged(x, y) {
     }
 }
 
-function pacmanOnTileCentered(x, y) {}
+function pacmanOnTileCentered(x, y) { }
 
-function ghostOnTileChanged(x, y) {}
+function ghostOnTileChanged(x, y) { }
 
-function ghostOnTileCentered(x, y) {}
+function ghostOnTileCentered(x, y) {
+    console.log('turn!');
+    AI.ghostTileCenter(blinky);
+}

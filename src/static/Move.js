@@ -1,54 +1,20 @@
 class Move {
 
-    constructor() {}
+    constructor() { }
 
     static pacman() {
-        // var left = 1;
-        // var right = 0;
-        // var up = 1.5;
-        // var down = 0.5;
-
-        var speed = 2 * pacman.moveSpeed //* .8;
-        var minDistance = 1;
-
-        // Teleport (tunnels) when going off-screen
-        if (pacman.moveDir == 'left' && pacman.leftObject() == undefined)
-            pacman.x = (Levels.levelSetup[pacman.roundedY()].length - 1) * unit + (unit / 2);
-
-        if (pacman.moveDir == 'right' && pacman.rightObject() == undefined)
-            pacman.x = unit / 2;
-
-        // Get available movement directions
-        var canMoveLeft = pacman.leftObject() > 2 || (pacman.leftObject() <= 0 && pacman.gridX() - (pacman.roundedX() - 1) > minDistance);
-        var canMoveRight = pacman.rightObject() > 2 || (pacman.rightObject() <= 0 && (pacman.roundedX() + 1) - pacman.gridX() > minDistance);
-        var canMoveUp = pacman.topObject() > 2 || (pacman.topObject() <= 0 && pacman.gridY() - (pacman.roundedY() - 1) > minDistance);
-        var canMoveDown = pacman.bottomObject() > 2 || (pacman.bottomObject() <= 0 && (pacman.roundedY() + 1) - pacman.gridY() > minDistance);
-
-        // Move
-        if (pacman.moveDir == 'left') {
-            if (canMoveLeft)
-                pacman.x -= speed * Time.scaledDeltaTime * Draw.normalizedUnit();
-        } else if (pacman.moveDir == 'right') {
-            if (canMoveRight)
-                pacman.x += speed * Time.scaledDeltaTime * Draw.normalizedUnit();
-        } else if (pacman.moveDir == 'up') {
-            if (canMoveUp)
-                pacman.y -= speed * Time.scaledDeltaTime * Draw.normalizedUnit();
-        } else if (pacman.moveDir == 'down') {
-            if (canMoveDown)
-                pacman.y += speed * Time.scaledDeltaTime * Draw.normalizedUnit();
-        }
+        Move.moveObject(pacman);
 
         // Smoothing (adjusting x and y position if it gets misaligned while turning)
-        if (pacman.moveDir == 'right' || pacman.moveDir == 'left') {
+        if (pacman.moveDir === 'right' || pacman.moveDir === 'left') {
             pacman.y = lerp(pacman.y, pacman.roundedAbsoluteY(), 0.1);
-        } else if (pacman.moveDir == 'up' || pacman.moveDir == 'down') {
+        } else if (pacman.moveDir === 'up' || pacman.moveDir === 'down') {
             pacman.x = lerp(pacman.x, pacman.roundedAbsoluteX(), 0.1);
         }
     }
 
     static blinky() {
-
+        Move.moveObject(blinky);
     }
 
     static inky() {
@@ -61,5 +27,38 @@ class Move {
 
     static sue() {
 
+    }
+
+    static moveObject(obj) {
+        var speed = 2 * obj.moveSpeed //* .8;
+        var minDistance = 1;
+
+        // Teleport (tunnels) when going off-screen
+        if (obj.moveDir === 'left' && obj.leftObject() === undefined)
+            obj.x = (Levels.levelSetup[obj.roundedY()].length - 1) * unit + (unit / 2);
+
+        if (obj.moveDir === 'right' && obj.rightObject() === undefined)
+            obj.x = unit / 2;
+
+        // Get available movement directions
+        var canMoveLeft = obj.leftObject() > 2 || (obj.leftObject() <= 0 && obj.gridX() - (obj.roundedX() - 1) > minDistance);
+        var canMoveRight = obj.rightObject() > 2 || (obj.rightObject() <= 0 && (obj.roundedX() + 1) - obj.gridX() > minDistance);
+        var canMoveUp = obj.topObject() > 2 || (obj.topObject() <= 0 && obj.gridY() - (obj.roundedY() - 1) > minDistance);
+        var canMoveDown = obj.bottomObject() > 2 || (obj.bottomObject() <= 0 && (obj.roundedY() + 1) - obj.gridY() > minDistance);
+
+        // Move
+        if (obj.moveDir === 'left') {
+            if (canMoveLeft)
+                obj.x -= speed * Time.scaledDeltaTime * Draw.normalizedUnit();
+        } else if (obj.moveDir === 'right') {
+            if (canMoveRight)
+                obj.x += speed * Time.scaledDeltaTime * Draw.normalizedUnit();
+        } else if (obj.moveDir === 'up') {
+            if (canMoveUp)
+                obj.y -= speed * Time.scaledDeltaTime * Draw.normalizedUnit();
+        } else if (obj.moveDir === 'down') {
+            if (canMoveDown)
+                obj.y += speed * Time.scaledDeltaTime * Draw.normalizedUnit();
+        }
     }
 }

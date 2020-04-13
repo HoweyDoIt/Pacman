@@ -6,7 +6,7 @@ const baseUnit = 20;
 const unit = 20;
 
 class Draw {
-    constructor() {}
+    constructor() { }
 
     static normalizedUnit() {
         return unit / baseUnit;
@@ -28,7 +28,7 @@ class Draw {
 
         for (var y = 0; y < gridH; y++)
             for (var x = 0; x < gridW; x++) {
-                if (Levels.level1[y][x] == 0) {
+                if (Levels.level1[y][x] === 0) {
                     var drawWall = Draw.getWallType(x, y);
                     drawWall(x * unit, y * unit);
                 }
@@ -75,7 +75,7 @@ class Draw {
 
         var event = Time.frameCount % Math.round(60 / frameChangePerSecond); // 60 = old fps
 
-        if (event == 0)
+        if (event === 0)
             Draw.pacmanAnim++;
         if (Draw.pacmanAnim >= frames.length)
             Draw.pacmanAnim = 0;
@@ -138,11 +138,11 @@ class Draw {
     static dots() {
         for (var y = 0; y < gridH; y++)
             for (var x = 0; x < gridW; x++) {
-                if (Levels.levelDynamic[y][x] == 3) {
+                if (Levels.levelDynamic[y][x] === 3) {
                     Draw.dot(unit / 8, x, y);
                 }
 
-                if (Levels.levelDynamic[y][x] == 4) {
+                if (Levels.levelDynamic[y][x] === 4) {
                     Draw.dot(unit / 3, x, y);
                 }
             }
@@ -246,7 +246,7 @@ class Draw {
         return Draw.nothing;
     }
 
-    static nothing(x, y) {}
+    static nothing(x, y) { }
 
     static wallVertical(x, y) {
         var curX = x + (unit / 2);

@@ -1,5 +1,5 @@
 class Input {
-    constructor() {}
+    constructor() { }
 
     static leftPressed = false;
     static rightPressed = false;
@@ -62,30 +62,25 @@ class Input {
     }
 
     static update() {
-        var left = 1;
-        var right = 0;
-        var up = 1.5;
-        var down = 0.5;
-
-        if (Input.leftPressed == true) {
+        if (Input.leftPressed === true) {
             if (pacman.leftObject() > 2 && pacman.moveDir != 'left') {
                 pacman.moveDir = 'left';
             }
         }
 
-        if (Input.upPressed == true) {
+        if (Input.upPressed === true) {
             if (pacman.topObject() > 2 && pacman.moveDir != 'up') {
                 pacman.moveDir = 'up';
             }
         }
 
-        if (Input.rightPressed == true) {
+        if (Input.rightPressed === true) {
             if (pacman.rightObject() > 2 && pacman.moveDir != 'right') {
                 pacman.moveDir = 'right';
             }
         }
 
-        if (Input.downPressed == true) {
+        if (Input.downPressed === true) {
             if (pacman.bottomObject() > 2 && pacman.moveDir != 'down') {
                 pacman.moveDir = 'down';
             }
